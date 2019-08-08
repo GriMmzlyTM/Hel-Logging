@@ -1,0 +1,6 @@
+#ifndef HEL_LOGGING_LIBRARY_H
+#define HEL_LOGGING_LIBRARY_H
+
+void hello();
+
+#endif //HEL_LOGGING_LIBRARY_H
