@@ -3,4 +3,4 @@ project(Hel_Logging)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(Hel_Logging library.cpp library.h)
+add_library(Hel_Logging wrapper.cpp wrapper.h)
