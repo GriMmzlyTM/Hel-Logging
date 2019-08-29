@@ -30,28 +30,30 @@ target_include_directories(Hel_Logging PUBLIC
 # --
 get_filename_component(TEMPLATE_DIR ../Hel-Logging-Template ABSOLUTE)
 
-# Create template directory
-file(MAKE_DIRECTORY
-        ${TEMPLATE_DIR}
-        ${TEMPLATE_DIR}/test)
-
-# Copy wrapper
-add_custom_command(TARGET Hel_Logging
-        PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/HelLogger.h
-        ${TEMPLATE_DIR})
-
-# Copy tests
-add_custom_command(TARGET Hel_Logging
-        PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${TEST_DIR}
-        ${TEMPLATE_DIR}/test/)
-
-# Copy cmake
-add_custom_command(TARGET Hel_Logging
-        PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt
-        ${TEMPLATE_DIR}/CMakeLists.txt)
+# -- Create template directory --
+# -- UNCOMMENT TO GENERATE TEMPLATE ONE LEVEL ABOVE THIS DIRECTORY.
+# -- TEMPLATE INCLUDES CMAKE, wrapper header, and wrapper test. 
+#file(MAKE_DIRECTORY
+#        ${TEMPLATE_DIR}
+#        ${TEMPLATE_DIR}/test)
+#
+## Copy wrapper
+#add_custom_command(TARGET Hel_Logging
+#        PRE_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/HelLogger.h
+#        ${TEMPLATE_DIR})
+#
+## Copy tests
+#add_custom_command(TARGET Hel_Logging
+#        PRE_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy_directory ${TEST_DIR}
+#        ${TEMPLATE_DIR}/test/)
+#
+## Copy cmake
+#add_custom_command(TARGET Hel_Logging
+#        PRE_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt
+#        ${TEMPLATE_DIR}/CMakeLists.txt)
 
 # -- Create library directory --
 # --
