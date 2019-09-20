@@ -26,13 +26,32 @@ target_include_directories(Hel_Logging PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
         $<INSTALL_INTERFACE:include>)
 
-# -- Generate template for logging --
+# -- Create include directory --
 # --
-get_filename_component(TEMPLATE_DIR ../Hel-Logging-Template ABSOLUTE)
+set (INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+file(MAKE_DIRECTORY
+        ${INCLUDE_DIR}
+        ${INCLUDE_DIR}/${LOGGER_VERSION}-${CMAKE_BUILD_TYPE}
+        ${INCLUDE_DIR}/${LOGGER_VERSION}-${CMAKE_BUILD_TYPE}/HelLogger)
+
+# Add wrapper header to include
+add_custom_command(TARGET Hel_Logging
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/HelLogger.h
+        ${INCLUDE_DIR}/${LOGGER_VERSION}-${CMAKE_BUILD_TYPE}/HelLogger/HelLogger.h)
+
+# Add lib to include
+add_custom_command(TARGET Hel_Logging
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/cmake-build-${CMAKE_BUILD_TYPE}/Hel_Logging.lib
+        ${INCLUDE_DIR}/${LOGGER_VERSION}-${CMAKE_BUILD_TYPE}/HelLogger/HelLogger.lib)
 
 # -- Create template directory --
 # -- UNCOMMENT TO GENERATE TEMPLATE ONE LEVEL ABOVE THIS DIRECTORY.
-# -- TEMPLATE INCLUDES CMAKE, wrapper header, and wrapper test. 
+# -- TEMPLATE INCLUDES CMAKE, wrapper header, and wrapper test.
+
+#get_filename_component(TEMPLATE_DIR ../Hel-Logging-Template ABSOLUTE)
+
 #file(MAKE_DIRECTORY
 #        ${TEMPLATE_DIR}
 #        ${TEMPLATE_DIR}/test)
@@ -54,27 +73,6 @@ get_filename_component(TEMPLATE_DIR ../Hel-Logging-Template ABSOLUTE)
 #        PRE_BUILD
 #        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt
 #        ${TEMPLATE_DIR}/CMakeLists.txt)
-
-# -- Create library directory --
-# --
-set (INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-file(MAKE_DIRECTORY
-        ${INCLUDE_DIR}
-        ${INCLUDE_DIR}/${LOGGER_VERSION}-${CMAKE_BUILD_TYPE}
-        ${INCLUDE_DIR}/${LOGGER_VERSION}-${CMAKE_BUILD_TYPE}/HelLogger)
-
-# Add wrapper header to include
-add_custom_command(TARGET Hel_Logging
-        POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/HelLogger.h
-        ${INCLUDE_DIR}/${LOGGER_VERSION}-${CMAKE_BUILD_TYPE}/HelLogger/HelLogger.h)
-
-# Add lib to include
-add_custom_command(TARGET Hel_Logging
-        POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/cmake-build-${CMAKE_BUILD_TYPE}/Hel_Logging.lib
-        ${INCLUDE_DIR}/${LOGGER_VERSION}-${CMAKE_BUILD_TYPE}/HelLogger/HelLogger.lib)
 
 # -- CMake instructions to test logging --
 # --
